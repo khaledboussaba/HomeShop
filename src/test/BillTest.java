@@ -8,6 +8,7 @@ import homeshop.Bill;
 import homeshop.Customer;
 import homeshop.Delivery;
 import homeshop.Fridge;
+import homeshop.NoProductInBillException;
 import homeshop.Product;
 import homeshop.RelayDelivery;
 import homeshop.Television;
@@ -57,6 +58,12 @@ class BillTest {
         bill.addProduct(tv, 1);
         bill.addProduct(fridge, 1);
         assertEquals(870.98, bill.getTotal(), 0.01);
+    }
+    
+    @Test
+    public void Given_emptyProductList_generatingBill_Then_throwsException() {
+        Bill bill = new Bill(customer, lowCostRelayDelivery);
+        assertThrows(NoProductInBillException.class, () -> bill.generate(writerMock));
     }
 
 }
